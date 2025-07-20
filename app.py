@@ -132,7 +132,7 @@ def view_feedbacks():
     if 'email' not in session:
         return redirect(url_for('index'))
 
-    owner_email = 'naveenbgowda11@gmail.com'  # owners  email
+    owner_email = 'navin@gmail.com'  # owners  email
     if session['email'] != owner_email:
         return "Access Denied: Only owner can view feedbacks.", 403
 
