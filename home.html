@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexture AI - Home</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      transition: background  0.3s;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .menu-toggle {
+      cursor: pointer;
+      font-size: 26px;
+    }
+    .menu {
+      position: absolute;
+      right: 20px;
+      top: 60px;
+      background: #1c1c1c;
+      border-radius: 10px;
+      display: none;
+      flex-direction: column;
+      padding: 10px;
+      z-index: 100;
+    }
+    .menu button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      width: 100%;
+    }
+    .menu button:hover {
+      background: #2e2e2e;
+    }
+    .container {
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .chat-box {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .chat-box input {
+      width: 80%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    .chat-box button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      background-color: #8e78ac00;
+      color: white;
+      cursor: pointer;
+    }
+    .chat-box button:hover {
+      background-color: #16a085;
+    }
+    .response {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+    }
+    .response .entry {
+      margin-bottom: 15px;
+    }
+    .entry .user {
+      color: #1abc9c;
+    }
+    .entry .ai {
+      color: #ffd700;
+    }
+    .dark-theme {
+      background: #111;
+      color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">Nexture AI</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="menu" id="menu">
+      <button onclick="showUserInfo()">👤 User Info</button>
+      <button onclick="openFeedback()">✉ Feedback</button>
+      {% if email == 'naveenbgowda11@gmail.com' %}
+        <button onclick="location.href='/admin/feedback'">📋 View Feedback</button>
+      {% endif %}
+      <button onclick="showAbout()">ℹ About</button>
+      <button onclick="toggleTheme()">🌓 Theme</button>
+      <button onclick="logout()">📱 Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Welcome, {{ email }}</h2>
+    
+    <div class="chat-box">
+      <input type="text" id="userInput" placeholder="Ask me anything...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="response" class="response">
+      {% for chat in chat_history %}
+        <div class="entry">
+          <div class="user"><strong>You:</strong> {{ chat.user }}</div>
+          <div class="ai"><strong>AI:</strong> {{ chat.ai }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function showUserInfo() {
+      alert("Logged in as: {{ email }}");
+    }
+
+    function openFeedback() {
+      const feedback = prompt("Please enter your feedback:");
+      if (feedback) {
+        fetch('/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ feedback: feedback })
+        })
+        .then(res => res.json())
+        .then(data => alert(data.message || "Thanks for your feedback!"));
+      }
+    }
+
+    function showAbout() {
+      alert("Nexture-Al is a visionary Al-powered technology startup founded by NAVEEN KUMAR B AND YASHWIN GOWDA K with the mission to make artificial intelligence more accessible, intuitive, and human-like for everyone. At Nexture-Al, we believe that Al should not only assist people in daily tasks but also connect with them on an emotional and intellectual level.\\n We aim to build intelligent systems that understand natural language, adapt to user preferences, and offer personalized experiences-whether for students, professionals, or creatives.\\nOur first product, the Nexture-Al Assistant, brings together:\\n✨Conversational Al\\n🎨Personalization & Theming\\n🌗Dark & Light Modes\\n⛓‍💥Easy Accessibility\\nWe are passionate about using technology to simplify lives, enhance productivity, and inspire creativity. Nexture-Al is not just a tool-it's a smart companion that grows and learns alongside you.");
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+    }
+
+    function logout(){
+      window.location.href = "/logout";
+    }
+
+    function sendMessage() {
+      const message = document.getElementById('userInput').value;
+      if (!message.trim()) return;
+      fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const responseDiv = document.getElementById('response');
+        const entry = document.createElement('div');
+        entry.classList.add('entry');
+        entry.innerHTML = `<div class='user'><strong>You:</strong> ${message}</div>
+                           <div class='ai'><strong>AI:</strong> ${data.response}</div>`;
+        responseDiv.appendChild(entry);
+        document.getElementById('userInput').value = '';
+        responseDiv.scrollTop = responseDiv.scrollHeight;
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Login Page Styles */
+.login-body {
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  text-align: center;
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.login-container input {
+  display: block;
+  width: 250px;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+/* Home Page Styles */
+.home-body {
+  background: #ffffff;
+  color: #000;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #0078d7;
+  color: #fff;
+}
+
+.menu {
+  display: none;
+  background: #eee;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.menu p {
+  margin: 5px 0;
+}
+
+.chat-container {
+  padding: 20px;
+  min-height: 300px;
+}
+
+.chat-input {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.chat-input input {
+  width: 60%;
+  padding: 10px;
+}
+
+.chat-input button {
+  padding: 10px;
+  margin-left: 5px;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
