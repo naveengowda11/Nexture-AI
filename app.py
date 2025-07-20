@@ -106,27 +106,7 @@ def chat():
     elif  "lonely" in user_message :   
         response =  "You’re not alone. I’m with you. 💖"
     elif "excited" in user_message:   
-        response="That's awesome! Tell me more! 😄"
-    elif "email for internship" in user_message:
-        response = """ 
-
-                       Subject: Application for Internship Position – [Your Full Name]\nDear [Recipient's Name or "Hiring Manager"],\n
-
-                     I hope this message finds you well.\n
-
-                     My name is [Your Full Name], and I am currently pursuing a [Your Degree, e.g., B.Tech in Computer Science and Engineering (Data Science)] at [Your University Name], expected to graduate in [Year].\n
-
-                     I am writing to express my interest in the [specific internship role, e.g., Data Science Intern / Software Engineering Intern] position at [Company Name]. I am eager to apply and grow my skills in [mention relevant skills, e.g., Python, C, TensorFlow, Machine Learning], and I am particularly excited about the opportunity to contribute to your innovative work in [mention relevant field or project area, e.g., AI-powered solutions, scalable web development, etc.].\n
-
-                     Attached is my resume for your review. I would be grateful for the opportunity to further discuss how I can contribute to your team.\n
-
-                     Thank you for your time and consideration. I look forward to hearing from you.\n
-
-                      Warm regards,\n
-                     [Your Full Name]\n
-                     [Phone Number]\n
-                     [Email Address]\n
-                     [LinkedIn/GitHub/Portfolio – if available] """
+        response="That's awesome! Tell me more.😄"        
     else:
         response = "Hmm, I didn't understand that yet. I'm still learning! 🤖"
 
